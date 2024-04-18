@@ -1,111 +1,135 @@
+/**
+ * 
+ */
 package com.example.bookstore.model;
 
-import jakarta.persistence.Column;
+import java.sql.Date;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import java.util.Set;
 
+/**
+ * @author user
+ *
+ */
 @Entity
-@Table(name = "books")
-public class Book{
+@Table(name="`book`")
 
+public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotBlank
-    private String title;
-
-    @ManyToMany
-    @JoinColumn(name = "author")
-    private Author author;
-
     
+    private String title;
+    private String isbn;
     private double price;
 
-    @Column
-    private int publishedYear;
+    private Date publishedDate;
+    private String coverImage;
+    public Book() {}
+    public Book(String title, String isbn, double price, Date publishedDate, String coverImage, Author author,
+			Publisher publisher, Set<Category> categories) {
+		super();
+		this.title = title;
+		this.isbn = isbn;
+		this.price = price;
+		this.publishedDate = publishedDate;
+		this.coverImage = coverImage;
+		this.author = author;
+		this.publisher = publisher;
+		this.categories = categories;
+	}
 
-    @Column
-    private String category;
+    
+	@ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 
-    @NotBlank
-    private String isbn;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
 
-    @ManyToMany
-    @JoinTable(
-        name = "book_category",
-        joinColumns = @JoinColumn(name = "book_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
+    @ManyToMany(mappedBy = "books")
     private Set<Category> categories;
 
+	public Long getId() {
+		return id;
+	}
 
-    // Constructors
-    public Book() {
-        // Default constructor
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Book(Long id, String title, Author author, double price, String isbn) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.price = price;
-        this.isbn = isbn;
-    }
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
+	}
+
+	public String getCoverImage() {
+		return coverImage;
+	}
+
+	public void setCoverImage(String coverImage) {
+		this.coverImage = coverImage;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
 
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public Object gaetShortName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getShortName'");
-    }
 }

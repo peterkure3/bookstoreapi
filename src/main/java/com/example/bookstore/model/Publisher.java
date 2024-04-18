@@ -1,5 +1,7 @@
 package com.example.bookstore.model;
 
+
+import java.sql.Date;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -7,32 +9,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="`category`")
+@Table(name="`publisher`")
 
-public class Category {
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String description;
+    private String address;
 
-    @ManyToMany
-    @JoinTable(
-        name = "category_book",
-        joinColumns = @JoinColumn(name = "category_id"),
-        inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
+    @OneToMany(mappedBy = "publisher")
     private Set<Book> books;
-    public Category() {}
-	public Category(String name, String description, Set<Book> books) {
+
+    public Publisher() {}
+	public Publisher(String name, String address, Set<Book> books) {
 		super();
 		this.name = name;
-		this.description = description;
+		this.address = address;
 		this.books = books;
 	}
 
@@ -52,12 +50,12 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public Set<Book> getBooks() {

@@ -1,56 +1,83 @@
 package com.example.bookstore.model;
-
-import java.util.List;
+import java.sql.Date;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 
 @Entity
+@Table(name="`order`")
+
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Date orderDate;
+    private String status;
 
-    private String customerName;
-    private String customerAddress;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @OneToMany(mappedBy = "order")
-    private List<Order> order;
+    private Set<OrderItem> orderItems;
 
-    public Long getId() {
-        return id;
-    }
+    public Order() {}
+    
+	public Order(Date orderDate, String status, Customer customer, Set<OrderItem> orderItems) {
+		super();
+		this.orderDate = orderDate;
+		this.status = status;
+		this.customer = customer;
+		this.orderItems = orderItems;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getCustomerName() {
-        return customerName;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+	public Date getOrderDate() {
+		return orderDate;
+	}
 
-    public String getCustomerAddress() {
-        return customerAddress;
-    }
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
 
-    public void setCustomerAddress(String customerAddress) {
-        this.customerAddress = customerAddress;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public List<Order> getOrder() {
-        return order;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public void setOrder(List<Order> order) {
-        this.order = order;
-    }
+	public Customer getCustomer() {
+		return customer;
+	}
 
-    // getters and setters
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
+    // Getters and Setters
 }
