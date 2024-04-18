@@ -1,46 +1,71 @@
 package com.example.bookstore.model;
+/**
+ * 
+ */
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import java.sql.Date;
+import java.util.Set;
 
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="`author`")
 public class Author {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotBlank
     private String name;
-
-    @ManyToMany(mappedBy = "author") // Corrected mappedBy value to match the property in Book entity
-    private List<Book> books;
-
-    public Author() {}
-
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
+    public Author() {}
+	public Author(String name, String biography, Set<Book> books) {
+		super();
+		this.name = name;
+		this.biography = biography;
+		this.books = books;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Book> getBooks() {
-        return books;
-    }
+	public String getBiography() {
+		return biography;
+	}
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+	public Set<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Set<Book> books) {
+		this.books = books;
+	}
+
+	private String biography;
+
+    @OneToMany(mappedBy = "author")
+    private Set<Book> books;
+
+    // Getters and Setters
 }
