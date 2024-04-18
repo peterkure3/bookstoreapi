@@ -13,47 +13,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bookstore.model.Book;
-import com.example.bookstore.services.BookService;
+import com.example.bookstore.model.Customer;
+import com.example.bookstore.services.CustomerService;
 
 @RestController
-@RequestMapping("/books")
-public class BookController {
+@RequestMapping("/customers")
+public class CustomerController {
     @Autowired
-    private BookService bookService;
+    private CustomerService customerService;
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.findAllBooks();
+    public List<Customer> getAllCustomers() {
+        return customerService.findAllCustomers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        return bookService.findBookById(id)
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        return customerService.findCustomerById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Book createBook(@RequestBody Book book) {
-        return bookService.saveBook(book);
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.saveCustomer(customer);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return bookService.findBookById(id)
-            .map(existingBook -> {
-                book.setId(id);
-                return ResponseEntity.ok(bookService.saveBook(book));
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+        return customerService.findCustomerById(id)
+            .map(existingCustomer -> {
+                customer.setId(id);
+                return ResponseEntity.ok(customerService.saveCustomer(customer));
             })
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        return bookService.findBookById(id)
-            .map(book -> {
-                bookService.deleteBook(id);
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+        return customerService.findCustomerById(id)
+            .map(customer -> {
+                customerService.deleteCustomer(id);
                 return ResponseEntity.ok().<Void>build();
             })
             .orElseGet(() -> ResponseEntity.notFound().build());

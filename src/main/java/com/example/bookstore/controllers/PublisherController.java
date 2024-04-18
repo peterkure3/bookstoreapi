@@ -13,47 +13,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bookstore.model.Book;
-import com.example.bookstore.services.BookService;
+import com.example.bookstore.model.Publisher;
+import com.example.bookstore.services.PublisherService;
 
 @RestController
-@RequestMapping("/books")
-public class BookController {
+@RequestMapping("/publishers")
+public class PublisherController {
     @Autowired
-    private BookService bookService;
+    private PublisherService publisherService;
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.findAllBooks();
+    public List<Publisher> getAllPublishers() {
+        return publisherService.findAllPublishers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        return bookService.findBookById(id)
+    public ResponseEntity<Publisher> getPublisherById(@PathVariable Long id) {
+        return publisherService.findPublisherById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Book createBook(@RequestBody Book book) {
-        return bookService.saveBook(book);
+    @PostMapping("/create")
+    public Publisher createPublisher(@RequestBody Publisher publisher) {
+        return publisherService.savePublisher(publisher);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return bookService.findBookById(id)
-            .map(existingBook -> {
-                book.setId(id);
-                return ResponseEntity.ok(bookService.saveBook(book));
+    public ResponseEntity<Publisher> updatePublisher(@PathVariable Long id, @RequestBody Publisher publisher) {
+        return publisherService.findPublisherById(id)
+            .map(existingPublisher -> {
+                publisher.setId(id);
+                return ResponseEntity.ok(publisherService.savePublisher(publisher));
             })
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        return bookService.findBookById(id)
-            .map(book -> {
-                bookService.deleteBook(id);
+    public ResponseEntity<Void> deletePublisher(@PathVariable Long id) {
+        return publisherService.findPublisherById(id)
+            .map(publisher -> {
+                publisherService.deletePublisher(id);
                 return ResponseEntity.ok().<Void>build();
             })
             .orElseGet(() -> ResponseEntity.notFound().build());
