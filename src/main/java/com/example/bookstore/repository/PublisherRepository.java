@@ -3,9 +3,9 @@ package com.example.bookstore.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.bookstore.model.Category;
+import com.example.bookstore.model.Publisher;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface PublisherRepository extends JpaRepository<Publisher, Long> {
     // Custom methods, e.g., findByName(String name);
 }

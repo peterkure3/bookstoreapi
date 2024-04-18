@@ -1,9 +1,12 @@
 package com.example.bookstore.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.example.bookstore.model.Book;
 
-public interface BookRepository extends JpaRepository <Book, Long>{
-    
+@Repository
+public interface BookRepository extends JpaRepository<Book, Long> {
+    // You can define custom methods here, e.g., findByTitleContaining(String title);
 }
+
