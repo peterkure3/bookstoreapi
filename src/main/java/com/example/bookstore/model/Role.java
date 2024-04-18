@@ -2,7 +2,7 @@ package com.example.bookstore.model;
 
 import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 @Entity
