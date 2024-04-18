@@ -1,23 +1,24 @@
 package com.example.bookstore.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.bookstore.model.Author;
 import com.example.bookstore.repository.AuthorRepository;
 
 @Service
 public class AuthorService {
-
     @Autowired
-    AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
-    public List<Author> getAllAuthors() {
+    public List<Author> findAllAuthors() {
         return authorRepository.findAll();
     }
 
-    public Optional<Author> getAuthorById(Long id) {
+    public Optional<Author> findAuthorById(Long id) {
         return authorRepository.findById(id);
     }
 
@@ -25,18 +26,7 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
-    public void deleteAuthorById(Long id) {
+    public void deleteAuthor(Long id) {
         authorRepository.deleteById(id);
-    }
-
-    public Author updateAuthor(Long id, Author authorDetails) {
-        Optional<Author> optionalAuthor = authorRepository.findById(id);
-        if (optionalAuthor.isPresent()) {
-            Author existingAuthor = optionalAuthor.get();
-            existingAuthor.setName(authorDetails.getName());
-            return authorRepository.save(existingAuthor);
-        } else {
-            throw new AuthorNotFoundException("Author with ID " + id + " not found");
-        }
     }
 }
