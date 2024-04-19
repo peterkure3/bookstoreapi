@@ -1,55 +1,61 @@
 package com.example.bookstore.controllers;
-//package com.example.BookStore.Controllers;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import com.example.BookStore.Models.OrderItem;
-//import com.example.BookStore.Services.OrderItemService;
-//
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/orderItems")
-//public class OrderItemController {
-//    @Autowired
-//    private OrderItemService orderItemService;
-//
-//    @GetMapping
-//    public List<OrderItem> getAllOrderItems() {
-//        return orderItemService.findAllOrderItems();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) {
-//        return orderItemService.findOrderItemById(id)
-//            .map(ResponseEntity::ok)
-//            .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-//
-//    @PostMapping
-//    public OrderItem createOrderItem(@RequestBody OrderItem orderItem) {
-//        return orderItemService.saveOrderItem(orderItem);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<OrderItem> updateOrderItem(@PathVariable Long id, @RequestBody OrderItem orderItem) {
-//        return orderItemService.findOrderItemById(id)
-//            .map(existingOrderItem -> {
-//                orderItem.setId(id); // Ensure the ID is not changed
-//                return ResponseEntity.ok(orderItemService.saveOrderItem(orderItem));
-//            })
-//            .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteOrderItem(@PathVariable Long id) {
-//        return orderItemService.findOrderItemById(id)
-//            .map(orderItem -> {
-//                orderItemService.deleteOrderItem(id);
-//                return ResponseEntity.ok().<Void>build();
-//            })
-//            .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-//}
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.bookstore.model.OrderItem;
+import com.example.bookstore.services.OrderItemService;
+
+@RestController
+@RequestMapping("/orderItems")
+public class OrderItemController {
+   @Autowired
+   private OrderItemService orderItemService;
+
+   @GetMapping
+   public List<OrderItem> getAllOrderItems() {
+       return orderItemService.findAllOrderItems();
+   }
+
+   @GetMapping("/{id}")
+   public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) {
+       return orderItemService.findOrderItemById(id)
+           .map(ResponseEntity::ok)
+           .orElseGet(() -> ResponseEntity.notFound().build());
+   }
+
+   @PostMapping
+   public OrderItem createOrderItem(@RequestBody OrderItem orderItem) {
+       return orderItemService.saveOrderItem(orderItem);
+   }
+
+   @PutMapping("/{id}")
+   public ResponseEntity<OrderItem> updateOrderItem(@PathVariable Long id, @RequestBody OrderItem orderItem) {
+       return orderItemService.findOrderItemById(id)
+           .map(existingOrderItem -> {
+               orderItem.setId(id); // Ensure the ID is not changed
+               return ResponseEntity.ok(orderItemService.saveOrderItem(orderItem));
+           })
+           .orElseGet(() -> ResponseEntity.notFound().build());
+   }
+
+   @DeleteMapping("/{id}")
+   public ResponseEntity<Void> deleteOrderItem(@PathVariable Long id) {
+       return orderItemService.findOrderItemById(id)
+           .map(orderItem -> {
+               orderItemService.deleteOrderItem(id);
+               return ResponseEntity.ok().<Void>build();
+           })
+           .orElseGet(() -> ResponseEntity.notFound().build());
+   }
+}

@@ -36,7 +36,6 @@ public class CategoryController {
 
     @PostMapping
     public Category createCategory(@RequestBody Category category) {
-    	System.out.println("============code in here  ==================");
         return categoryService.saveCategory(category);
     }
 
