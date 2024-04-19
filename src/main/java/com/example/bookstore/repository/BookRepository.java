@@ -7,6 +7,5 @@ import com.example.bookstore.model.Book;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    // You can define custom methods here, e.g., findByTitleContaining(String title);
 }
 

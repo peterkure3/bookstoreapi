@@ -7,5 +7,4 @@ import com.example.bookstore.model.Publisher;
 
 @Repository
 public interface PublisherRepository extends JpaRepository<Publisher, Long> {
-    // Custom methods, e.g., findByName(String name);
 }

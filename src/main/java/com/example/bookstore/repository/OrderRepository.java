@@ -7,5 +7,4 @@ import com.example.bookstore.model.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    // Custom methods, e.g., findByCustomer(Customer customer);
 }
